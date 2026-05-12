@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<!-- 
+  DOCTYPE tells the browser: "This is a modern HTML5 page."
+  Always the very first line of any HTML file.
+-->
+<html lang="en">
+<head>
+  <!-- HEAD = stuff the browser needs but users don't see directly -->
+  <meta charset="UTF-8" />
+  <!-- UTF-8 means the page supports all characters, including symbols like ⚔️ -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- This makes the site look good on phones — without it, mobile looks zoomed out -->
+
+  <title>The Dragon's Keep — D&D for Beginners</title>
+
+  <!-- Google Fonts: loading two medieval-style fonts -->
+  <!-- MedievalSharp = decorative titles | Cinzel = elegant body text -->
+  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700;900&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome = icon library for sword/shield/dice symbols -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Our custom stylesheet — always link AFTER external fonts/icons -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ============================================================
+    NAVIGATION BAR
+    Fixed at the top so it scrolls with you.
+    Each <a href="#section"> scrolls to that section ID on the page.
+  ============================================================ -->
+  <nav id="navbar">
+    <div class="nav-logo">
+      <!-- Inline SVG Dragon Logo — no image file needed! -->
+      <svg class="dragon-icon" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 5 C30 5 10 20 10 40 C10 55 20 65 35 68 L50 75 L65 68 C80 65 90 55 90 40 C90 20 70 5 50 5Z" fill="#8B0000" opacity="0.9"/>
+        <path d="M35 30 C30 20 15 15 10 25 C8 30 15 38 25 35Z" fill="#C9A84C"/>
+        <path d="M65 30 C70 20 85 15 90 25 C92 30 85 38 75 35Z" fill="#C9A84C"/>
+        <circle cx="38" cy="38" r="5" fill="#FFD700"/>
+        <circle cx="62" cy="38" r="5" fill="#FFD700"/>
+        <circle cx="39" cy="37" r="2" fill="#000"/>
+        <circle cx="63" cy="37" r="2" fill="#000"/>
+        <path d="M42 52 Q50 58 58 52" stroke="#C9A84C" stroke-width="2" fill="none"/>
+      </svg>
+      <span>The Dragon's Keep</span>
+    </div>
+
+    <!-- Hamburger button — only shows on mobile screens (controlled in CSS) -->
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="nav-links" id="nav-links">
+      <!-- Each link jumps to a section by matching its id="" attribute -->
+      <li><a href="#what-is-dnd">What is D&D?</a></li>
+      <li><a href="#characters">Characters</a></li>
+      <li><a href="#how-to-play">How to Play</a></li>
+      <li><a href="#battle">Battle Demo</a></li>
+      <li><a href="#soundboard">Soundboard</a></li>
+    </ul>
+  </nav>
+
+  <!-- ============================================================
+    HERO SECTION
+    The big dramatic first thing visitors see.
+    Contains animated ember particles and the main call-to-action.
+  ============================================================ -->
+  <section id="hero">
+    <!-- Particle container — JS will fill this with animated ember dots -->
+    <div id="particles"></div>
+
+    <!-- Decorative SVG dragon watermark behind the text -->
+    <div class="hero-dragon-watermark" aria-hidden="true">🐉</div>
+
+    <div class="hero-content">
+      <p class="hero-subtitle">Welcome, Adventurer</p>
+      <h1 class="hero-title">The Dragon's Keep</h1>
+      <p class="hero-tagline">Roll the Dice. Begin Your Legend.</p>
+      <p class="hero-desc">
+        New to Dungeons & Dragons? You've found your starting point.
+        Learn the rules, build a character, and survive your first battle — all right here.
+      </p>
+      <div class="hero-buttons">
+        <a href="#what-is-dnd" class="btn btn-primary">Begin Your Quest</a>
+        <a href="#battle" class="btn btn-secondary">Try the Battle Demo</a>
+      </div>
+    </div>
+
+    <!-- Scroll indicator arrow -->
+    <div class="scroll-indicator">
+      <span>Scroll to Explore</span>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </section>
+
+  <!-- ============================================================
+    WHAT IS D&D SECTION
+    Plain-language explanation for total beginners.
+    Uses info-cards laid out in a grid.
+  ============================================================ -->
+  <section id="what-is-dnd" class="section">
+    <div class="section-inner">
+      <h2 class="section-title">What is Dungeons & Dragons?</h2>
+      <p class="section-intro">
+        D&D is a <strong>cooperative storytelling game</strong> where you and your friends go on adventures together — battling monsters, finding treasure, and making choices that shape the story. One player is the <strong>Dungeon Master (DM)</strong> who narrates the world. Everyone else plays a unique character.
+      </p>
+
+      <!-- Three-column info grid explaining the three core pillars -->
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-icon">🎲</div>
+          <h3>Roll Dice</h3>
+          <p>Dice decide outcomes. Want to pick a lock? Roll a d20 (a 20-sided die). High numbers = success. Low numbers = failure. It's thrilling every time.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">📖</div>
+          <h3>Tell a Story</h3>
+          <p>The Dungeon Master describes the world. Your choices shape it. Will you sneak past the guards or challenge them to a fight? The story goes wherever you take it.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">⚔️</div>
+          <h3>Fight & Survive</h3>
+          <p>When combat starts, turns are taken in order. Attack enemies, cast spells, use abilities. Work together — some enemies can't be beaten alone.</p>
+        </div>
+      </div>
+
+      <!-- Key terms beginners always trip over -->
+      <div class="terms-box">
+        <h3>🗝️ Key Terms to Know</h3>
+        <ul class="terms-list">
+          <li><strong>d20</strong> — A 20-sided die. The most important die in D&D. Used for almost every action.</li>
+          <li><strong>Ability Score</strong> — Six stats (Strength, Dexterity, etc.) that define what your character is good at.</li>
+          <li><strong>HP (Hit Points)</strong> — Your health. Reach 0 HP and you fall unconscious.</li>
+          <li><strong>AC (Armor Class)</strong> — How hard you are to hit. Attackers must roll over your AC to deal damage.</li>
+          <li><strong>Initiative</strong> — A d20 roll at the start of combat to decide who goes first.</li>
+          <li><strong>Dungeon Master (DM)</strong> — The player who runs the world, controls enemies, and narrates the story.</li>
+          <li><strong>Party</strong> — Your group of adventurers. Teamwork is everything.</li>
+          <li><strong>Saving Throw</strong> — A roll to resist danger (like dodging a fireball or resisting poison).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+    CHARACTERS SECTION
+    Flip cards for each D&D class.
+    Front = name + role. Back = abilities + tips.
+    The flip effect is done in CSS with 3D transforms.
+  ============================================================ -->
+  <section id="characters" class="section section-dark">
+    <div class="section-inner">
+      <h2 class="section-title">Choose Your Class</h2>
+      <p class="section-intro">Your <strong>class</strong> is your character's profession and fighting style. Each plays completely differently. Hover over each card to learn more.</p>
+
+      <div class="class-grid">
+
+        <!-- Each .class-card has a front and a back face -->
+        <!-- The CSS flips it on hover using transform: rotateY(180deg) -->
+
+        <div class="class-card" data-class="fighter">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="class-emoji">⚔️</div>
+              <h3>Fighter</h3>
+              <span class="role-badge tank">Tank / DPS</span>
+              <p class="hover-hint">Hover to learn more</p>
+            </div>
+            <div class="card-back">
+              <h3>Fighter</h3>
+              <p><strong>Role:</strong> The party's frontline warrior. Absorbs damage so others don't have to.</p>
+              <ul>
+                <li>🛡️ Highest armor proficiency</li>
+                <li>⚔️ Multiple attacks per turn</li>
+                <li>💪 Powerful Action Surge ability</li>
+              </ul>
+              <p class="difficulty">Difficulty: ⭐☆☆ — Great for beginners!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="class-card" data-class="wizard">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="class-emoji">🧙</div>
+              <h3>Wizard</h3>
+              <span class="role-badge dps">Spell DPS</span>
+              <p class="hover-hint">Hover to learn more</p>
+            </div>
+            <div class="card-back">
+              <h3>Wizard</h3>
+              <p><strong>Role:</strong> Master of arcane magic. Devastating spells but fragile body.</p>
+              <ul>
+                <li>🔥 Fireball, Lightning Bolt, Polymorph</li>
+                <li>📚 Learns spells from a spellbook</li>
+                <li>💀 Low HP — stay in the back!</li>
+              </ul>
+              <p class="difficulty">Difficulty: ⭐⭐⭐ — Complex, powerful</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="class-card" data-class="rogue">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="class-emoji">🗡️</div>
+              <h3>Rogue</h3>
+              <span class="role-badge dps">Stealth / DPS</span>
+              <p class="hover-hint">Hover to learn more</p>
+            </div>
+            <div class="card-back">
+              <h3>Rogue</h3>
+              <p><strong>Role:</strong> Sneaky assassin and skill expert. Deadly from the shadows.</p>
+              <ul>
+                <li>🔪 Sneak Attack deals massive bonus damage</li>
+                <li>🔓 Locks, traps, and stealth specialist</li>
+                <li>💨 Cunning Action — bonus movement each turn</li>
+              </ul>
+              <p class="difficulty">Difficulty: ⭐⭐☆ — Fun for tactical players</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="class-card" data-class="cleric">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="class-emoji">✨</div>
+              <h3>Cleric</h3>
+              <span class="role-badge healer">Healer / Support</span>
+              <p class="hover-hint">Hover to learn more</p>
+            </div>
+            <div class="card-back">
+              <h3>Cleric</h3>
+              <p><strong>Role:</strong> Divine spellcaster. Heals allies and smites undead with holy power.</p>
+              <ul>
+                <li>💚 Cure Wounds, Healing Word</li>
+                <li>☀️ Turn Undead — destroys skeletons & zombies</li>
+                <li>🛡️ Can wear heavy armor unlike other casters</li>
+              </ul>
+              <p class="difficulty">Difficulty: ⭐⭐☆ — Vital to any party</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="class-card" data-class="ranger">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="class-emoji">🏹</div>
+              <h3>Ranger</h3>
+              <span class="role-badge dps">Scout / DPS</span>
+              <p class="hover-hint">Hover to learn more</p>
+            </div>
+            <div class="card-back">
+              <h3>Ranger</h3>
+              <p><strong>Role:</strong> Master archer and wilderness tracker. Deadly from range.</p>
+              <ul>
+                <li>🐺 Can have an animal companion</li>
+                <li>🏔️ Natural Explorer — expert in outdoor terrain</li>
+                <li>🎯 Hunter's Mark increases all damage</li>
+              </ul>
+              <p class="difficulty">Difficulty: ⭐☆☆ — Excellent for beginners</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="class-card" data-class="bard">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="class-emoji">🎵</div>
+              <h3>Bard</h3>
+              <span class="role-badge support">Support / Utility</span>
+              <p class="hover-hint">Hover to learn more</p>
+            </div>
+            <div class="card-back">
+              <h3>Bard</h3>
+              <p><strong>Role:</strong> Magical musician who inspires allies and controls enemies with song.</p>
+              <ul>
+                <li>🎶 Bardic Inspiration — boosts teammate rolls</li>
+                <li>🗣️ Best social/persuasion skills in game</li>
+                <li>🌀 Spells from any class via Magical Secrets</li>
+              </ul>
+              <p class="difficulty">Difficulty: ⭐⭐☆ — Creative & flexible</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="class-card" data-class="paladin">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="class-emoji">🏛️</div>
+              <h3>Paladin</h3>
+              <span class="role-badge tank">Holy Tank</span>
+              <p class="hover-hint">Hover to learn more</p>
+            </div>
+            <div class="card-back">
+              <h3>Paladin</h3>
+              <p><strong>Role:</strong> Holy warrior. Tanky fighter who can also heal and buff the party.</p>
+              <ul>
+                <li>⚡ Divine Smite — expend spell slots for burst damage</li>
+                <li>🛡️ Aura of Protection boosts all nearby allies</li>
+                <li>💊 Lay on Hands — free healing pool</li>
+              </ul>
+              <p class="difficulty">Difficulty: ⭐⭐☆ — Powerful all-rounder</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="class-card" data-class="barbarian">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="class-emoji">💢</div>
+              <h3>Barbarian</h3>
+              <span class="role-badge tank">Rage Tank</span>
+              <p class="hover-hint">Hover to learn more</p>
+            </div>
+            <div class="card-back">
+              <h3>Barbarian</h3>
+              <p><strong>Role:</strong> Primal berserker. Enters a Rage to deal massive damage and resist injury.</p>
+              <ul>
+                <li>😡 Rage — bonus damage + resistance to physical hits</li>
+                <li>❤️ Most HP of any class</li>
+                <li>🪨 Reckless Attack — attack twice, let enemies do the same</li>
+              </ul>
+              <p class="difficulty">Difficulty: ⭐☆☆ — Super fun for beginners!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="class-card" data-class="druid">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="class-emoji">🌿</div>
+              <h3>Druid</h3>
+              <span class="role-badge support">Nature / Support</span>
+              <p class="hover-hint">Hover to learn more</p>
+            </div>
+            <div class="card-back">
+              <h3>Druid</h3>
+              <p><strong>Role:</strong> Nature priest who shapeshifts into animals and controls the battlefield.</p>
+              <ul>
+                <li>🐻 Wild Shape — turn into a bear, wolf, or eagle</li>
+                <li>🌩️ Call Lightning, Entangle, Moonbeam</li>
+                <li>🌱 Heals and supports the whole party</li>
+              </ul>
+              <p class="difficulty">Difficulty: ⭐⭐⭐ — Very versatile</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="class-card" data-class="warlock">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="class-emoji">👁️</div>
+              <h3>Warlock</h3>
+              <span class="role-badge dps">Dark Caster</span>
+              <p class="hover-hint">Hover to learn more</p>
+            </div>
+            <div class="card-back">
+              <h3>Warlock</h3>
+              <p><strong>Role:</strong> Pact-magic caster fueled by a deal with a powerful otherworldly being.</p>
+              <ul>
+                <li>👁️ Eldritch Blast — reliable damage cantrip</li>
+                <li>🔮 Invocations — customizable dark powers</li>
+                <li>⚡ Spell slots recharge on a SHORT rest</li>
+              </ul>
+              <p class="difficulty">Difficulty: ⭐⭐☆ — Unique & flavorful</p>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end class-grid -->
+    </div>
+  </section>
+
+  <!-- ============================================================
+    HOW TO PLAY SECTION
+    Step-by-step accordion tutorial.
+    Clicking a step header toggles its content open/closed (JS handles this).
+  ============================================================ -->
+  <section id="how-to-play" class="section">
+    <div class="section-inner">
+      <h2 class="section-title">How to Play — Step by Step</h2>
+      <p class="section-intro">D&D has a rhythm. Once you understand the loop, everything clicks. Here's how a session flows:</p>
+
+      <div class="accordion">
+
+        <!-- Each .accordion-item = one collapsible step -->
+        <!-- The data-step number shows in the CSS as a decorative counter -->
+
+        <div class="accordion-item" data-step="1">
+          <button class="accordion-header">
+            <span>🎭 Step 1: Create Your Character</span>
+            <i class="fas fa-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>Before the game starts, you build your character using a <strong>Character Sheet</strong>. This records everything about who you are:</p>
+            <ul>
+              <li><strong>Choose a Race</strong> — Human, Elf, Dwarf, Halfling, etc. Each gives different bonuses.</li>
+              <li><strong>Choose a Class</strong> — See the Characters section above.</li>
+              <li><strong>Roll Ability Scores</strong> — Roll 4d6, drop the lowest, repeat 6 times. Assign scores to: Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma.</li>
+              <li><strong>Pick a Background</strong> — Soldier, Criminal, Sage? This gives you skills and a backstory.</li>
+              <li><strong>Name your character</strong> — Make it yours.</li>
+            </ul>
+            <p>💡 <em>Tip: Use D&D Beyond (dndbeyond.com) for a free digital character sheet that does the math for you.</em></p>
+          </div>
+        </div>
+
+        <div class="accordion-item" data-step="2">
+          <button class="accordion-header">
+            <span>🗺️ Step 2: The Dungeon Master Sets the Scene</span>
+            <i class="fas fa-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>The DM describes where you are and what's happening. Example:</p>
+            <blockquote>"You stand at the edge of a dark forest. The smell of smoke drifts through the trees. In the distance, you hear the crackle of fire and terrified screaming."</blockquote>
+            <p>Now it's the players' turn to <strong>decide what to do</strong>. Talk to each other. Make a plan. The DM responds to whatever you choose.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item" data-step="3">
+          <button class="accordion-header">
+            <span>🎲 Step 3: Make Ability Checks</span>
+            <i class="fas fa-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>Whenever you try something risky, the DM asks you to roll a <strong>d20</strong> and add a relevant stat modifier.</p>
+            <p><strong>Example:</strong> "I want to climb the wall." DM says: "Roll Strength (Athletics)." You roll a 12 + your Strength modifier of +3 = <strong>15</strong>. The DM had a Difficulty Class (DC) of 13 in mind — you succeed!</p>
+            <div class="roll-example">
+              <span class="roll-die">🎲</span>
+              <span class="roll-formula">d20 roll (12) + Ability Modifier (+3) = <strong>15</strong> vs DC 13 → ✅ Success!</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item" data-step="4">
+          <button class="accordion-header">
+            <span>⚔️ Step 4: Combat Round</span>
+            <i class="fas fa-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>When a fight breaks out, time becomes <strong>structured into rounds</strong>. Each round, every creature gets a <strong>turn</strong> in order of Initiative.</p>
+            <ol>
+              <li><strong>Roll Initiative</strong> — Everyone rolls d20 + Dexterity modifier. Highest goes first.</li>
+              <li><strong>Your Turn:</strong> On your turn you get a <strong>Move</strong> (move up to your speed), an <strong>Action</strong> (attack, cast spell, help), and sometimes a <strong>Bonus Action</strong>.</li>
+              <li><strong>Attack Roll</strong> — Roll d20 + Attack Bonus. If the total beats the enemy's AC, you hit!</li>
+              <li><strong>Damage Roll</strong> — Roll your weapon's damage dice (e.g. a sword = 1d8 + Strength modifier).</li>
+              <li><strong>Repeat</strong> until one side is defeated, flees, or surrenders.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="accordion-item" data-step="5">
+          <button class="accordion-header">
+            <span>💀 Step 5: Death Saving Throws</span>
+            <i class="fas fa-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>When your HP hits 0, you fall <strong>unconscious</strong> — but you're not dead yet! On each of your turns, roll a d20 with no modifiers:</p>
+            <ul>
+              <li><strong>10 or higher</strong> = 1 success (need 3 successes to stabilize)</li>
+              <li><strong>9 or lower</strong> = 1 failure (3 failures = death)</li>
+              <li><strong>Roll a 1</strong> = counts as 2 failures</li>
+              <li><strong>Roll a 20</strong> = you regain 1 HP and wake up!</li>
+            </ul>
+            <p>An ally can use their action to <strong>stabilize you</strong> with a Medicine check (DC 10) or a healing spell — saving you from rolling.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item" data-step="6">
+          <button class="accordion-header">
+            <span>🏆 Step 6: Rest & Level Up</span>
+            <i class="fas fa-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>After adventures, characters <strong>rest and grow stronger</strong>.</p>
+            <ul>
+              <li><strong>Short Rest (1 hour)</strong> — Roll Hit Dice to recover some HP. Warlocks regain spell slots.</li>
+              <li><strong>Long Rest (8 hours)</strong> — Fully restore HP and all spell slots. Do this between major encounters.</li>
+              <li><strong>Level Up</strong> — After enough XP (experience points) from defeating enemies and completing goals, your character gains a level, improving stats and unlocking new abilities.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div><!-- end accordion -->
+    </div>
+  </section>
+
+  <!-- ============================================================
+    BATTLE DEMO SECTION
+    The interactive JavaScript feature.
+    Players fight a Goblin using buttons. 
+    JS handles dice rolls, HP changes, combat log, and animations.
+  ============================================================ -->
+  <section id="battle" class="section section-dark">
+    <div class="section-inner">
+      <h2 class="section-title">⚔️ Live Battle Demo</h2>
+      <p class="section-intro">Experience D&D combat firsthand. You are a Level 1 Fighter. Defeat the Goblin before it defeats you!</p>
+
+      <div class="battle-arena">
+
+        <!-- PLAYER side -->
+        <div class="combatant" id="player-side">
+          <div class="combatant-name">🧙 You (Fighter)</div>
+          <div class="combatant-art player-art">⚔️</div>
+          <div class="hp-bar-wrapper">
+            <div class="hp-label">HP: <span id="player-hp">20</span> / 20</div>
+            <!-- The inner bar width shrinks as HP drops — controlled by JS -->
+            <div class="hp-bar">
+              <div class="hp-fill player-hp-fill" id="player-hp-bar"></div>
+            </div>
+          </div>
+          <div class="stats-mini">
+            <span>AC: 16</span>
+            <span>Attack: +5</span>
+            <span>DMG: 1d8+3</span>
+          </div>
+        </div>
+
+        <!-- MIDDLE: dice + vs banner -->
+        <div class="battle-center">
+          <div class="vs-banner">VS</div>
+          <!-- Dice display — JS updates the number shown here -->
+          <div class="dice-display" id="dice-display">
+            <div class="dice-face" id="dice-face">🎲</div>
+            <div class="dice-result" id="dice-result">—</div>
+          </div>
+          <div class="round-display">Round: <span id="round-num">1</span></div>
+        </div>
+
+        <!-- ENEMY side -->
+        <div class="combatant" id="enemy-side">
+          <div class="combatant-name">👺 Goblin</div>
+          <div class="combatant-art enemy-art">👺</div>
+          <div class="hp-bar-wrapper">
+            <div class="hp-label">HP: <span id="enemy-hp">7</span> / 7</div>
+            <div class="hp-bar">
+              <div class="hp-fill enemy-hp-fill" id="enemy-hp-bar"></div>
+            </div>
+          </div>
+          <div class="stats-mini">
+            <span>AC: 15</span>
+            <span>Attack: +4</span>
+            <span>DMG: 1d6+2</span>
+          </div>
+        </div>
+
+      </div><!-- end battle-arena -->
+
+      <!-- ACTION BUTTONS — JS listens for clicks on these -->
+      <div class="action-buttons" id="action-buttons">
+        <button class="action-btn attack-btn" id="btn-attack" onclick="playerAction('attack')">
+          ⚔️ Attack
+        </button>
+        <button class="action-btn spell-btn" id="btn-spell" onclick="playerAction('spell')">
+          🔥 Firebolt
+          <small>(Ranged Spell)</small>
+        </button>
+        <button class="action-btn dodge-btn" id="btn-dodge" onclick="playerAction('dodge')">
+          🛡️ Dodge
+          <small>(Boost AC this round)</small>
+        </button>
+      </div>
+
+      <!-- COMBAT LOG — JS appends messages here as the fight happens -->
+      <div class="combat-log-wrapper">
+        <div class="combat-log-title">📜 Combat Log</div>
+        <div class="combat-log" id="combat-log">
+          <p class="log-entry log-system">⚔️ A goblin leaps from the shadows! Roll for initiative...</p>
+          <p class="log-entry log-system">🎲 You rolled a 14! You go first. Choose your action!</p>
+        </div>
+      </div>
+
+      <!-- Restart button — hidden until combat ends -->
+      <button class="btn btn-primary restart-btn" id="restart-btn" onclick="restartBattle()" style="display:none;">
+        🔄 Fight Again
+      </button>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+    SOUNDBOARD SECTION
+    Buttons that trigger ambient audio loops.
+    Each button toggles a looping sound on/off.
+    CSS styles them as leather tavern buttons.
+  ============================================================ -->
+  <section id="soundboard" class="section">
+    <div class="section-inner">
+      <h2 class="section-title">🎵 Soundboard</h2>
+      <p class="section-intro">Set the mood for your session. Toggle ambient sounds to create an immersive environment. Mix and match!</p>
+
+      <!-- Master volume slider -->
+      <div class="volume-control">
+        <label for="master-volume">🔊 Master Volume</label>
+        <input type="range" id="master-volume" min="0" max="1" step="0.05" value="0.5" oninput="setMasterVolume(this.value)" />
+        <span id="volume-display">50%</span>
+      </div>
+
+      <!-- Sound buttons grid — each data-sound attribute tells JS which sound to play -->
+      <div class="soundboard-grid">
+        <button class="sound-btn" data-sound="tavern" onclick="toggleSound(this)">
+          <span class="sound-icon">🍺</span>
+          <span class="sound-name">Tavern Crowd</span>
+          <span class="sound-status">OFF</span>
+        </button>
+        <button class="sound-btn" data-sound="fire" onclick="toggleSound(this)">
+          <span class="sound-icon">🔥</span>
+          <span class="sound-name">Campfire</span>
+          <span class="sound-status">OFF</span>
+        </button>
+        <button class="sound-btn" data-sound="forest" onclick="toggleSound(this)">
+          <span class="sound-icon">🌲</span>
+          <span class="sound-name">Forest Ambience</span>
+          <span class="sound-status">OFF</span>
+        </button>
+        <button class="sound-btn" data-sound="thunder" onclick="toggleSound(this)">
+          <span class="sound-icon">⛈️</span>
+          <span class="sound-name">Thunder Storm</span>
+          <span class="sound-status">OFF</span>
+        </button>
+        <button class="sound-btn" data-sound="battle" onclick="toggleSound(this)">
+          <span class="sound-icon">⚔️</span>
+          <span class="sound-name">Distant Battle</span>
+          <span class="sound-status">OFF</span>
+        </button>
+        <button class="sound-btn" data-sound="dungeon" onclick="toggleSound(this)">
+          <span class="sound-icon">🏚️</span>
+          <span class="sound-name">Dungeon Echoes</span>
+          <span class="sound-status">OFF</span>
+        </button>
+        <button class="sound-btn" data-sound="wind" onclick="toggleSound(this)">
+          <span class="sound-icon">💨</span>
+          <span class="sound-name">Howling Wind</span>
+          <span class="sound-status">OFF</span>
+        </button>
+        <button class="sound-btn" data-sound="victory" onclick="toggleSound(this)">
+          <span class="sound-icon">🎺</span>
+          <span class="sound-name">Victory Fanfare</span>
+          <span class="sound-status">OFF</span>
+        </button>
+      </div>
+
+      <!-- Note about audio files -->
+      <div class="audio-note">
+        <p>💡 <strong>To add real sounds:</strong> Add .mp3 files named <code>tavern.mp3</code>, <code>fire.mp3</code>, etc. to an <code>/audio</code> folder in your project. See <code>script.js</code> for the sound system code.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+    FOOTER
+    Simple closing section with links.
+  ============================================================ -->
+  <footer id="footer">
+    <div class="footer-dragon">🐉</div>
+    <p class="footer-title">The Dragon's Keep</p>
+    <p class="footer-tagline">May your dice always roll true, adventurer.</p>
+    <div class="footer-links">
+      <a href="https://www.dndbeyond.com" target="_blank" rel="noopener">D&D Beyond</a>
+      <a href="https://dnd.wizards.com" target="_blank" rel="noopener">Official D&D Site</a>
+      <a href="https://www.reddit.com/r/DnD/" target="_blank" rel="noopener">r/DnD Community</a>
+    </div>
+    <p class="footer-copy">Built with ❤️ for new adventurers. D&D is © Wizards of the Coast.</p>
+  </footer>
+
+  <!-- Script tag ALWAYS goes at the bottom of <body> -->
+  <!-- This ensures all HTML elements exist before JS tries to find them -->
+  <script src="script.js"></script>
+
+</body>
+</html>

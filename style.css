@@ -1,0 +1,1345 @@
+/*
+  ============================================================
+  style.css — The Dragon's Keep
+  ============================================================
+
+  HOW TO READ THIS FILE:
+  CSS is written in blocks like this:
+    selector {
+      property: value;
+    }
+  
+  The "selector" targets HTML elements.
+  "property: value" sets how they look.
+
+  We're organized top-to-bottom:
+  1. CSS Variables (your color/font palette)
+  2. Global Reset & Base Styles
+  3. Navigation
+  4. Hero Section
+  5. Shared Section Styles
+  6. What is D&D Section
+  7. Characters / Class Cards
+  8. How to Play / Accordion
+  9. Battle Demo
+  10. Soundboard
+  11. Footer
+  12. Animations (keyframes)
+  13. Media Queries (mobile responsive)
+  ============================================================
+*/
+
+/* ============================================================
+  1. CSS VARIABLES — Your Design System
+  Define colors, fonts, and spacing once here.
+  Use them everywhere as var(--variable-name).
+  Change one value here → updates everywhere on the site.
+============================================================ */
+:root {
+  /* Color Palette */
+  --crimson:       #8B0000;       /* Deep blood red — primary brand color */
+  --crimson-light: #B22222;       /* Slightly brighter red for hovers */
+  --gold:          #C9A84C;       /* Aged gold — used for headings & accents */
+  --gold-bright:   #FFD700;       /* Bright gold for highlights */
+  --parchment:     #F5E6C8;       /* Warm cream — used for text on dark bgs */
+  --parchment-dim: #D4C49A;       /* Darker parchment for secondary text */
+  --black-deep:    #0D0D0D;       /* Near-black background */
+  --black-mid:     #1A1A1A;       /* Slightly lighter for card backgrounds */
+  --black-light:   #2A2A2A;       /* Even lighter for borders/panels */
+  --green-hp:      #4CAF50;       /* Player HP bar */
+  --red-hp:        #E53935;       /* Enemy HP bar */
+  --blue-spell:    #5C7BD4;       /* Spell effect color */
+
+  /* Typography */
+  --font-display: 'Cinzel Decorative', serif;  /* For main titles */
+  --font-heading: 'Cinzel', serif;             /* For section headings */
+  --font-body:    'Cinzel', serif;             /* For body text */
+
+  /* Spacing Scale */
+  --spacing-xs:  0.5rem;    /* 8px */
+  --spacing-sm:  1rem;      /* 16px */
+  --spacing-md:  2rem;      /* 32px */
+  --spacing-lg:  4rem;      /* 64px */
+  --spacing-xl:  6rem;      /* 96px */
+
+  /* Borders */
+  --border-gold: 1px solid var(--gold);
+  --border-crimson: 1px solid var(--crimson-light);
+
+  /* Shadows */
+  --shadow-gold: 0 0 20px rgba(201, 168, 76, 0.3);
+  --shadow-red:  0 0 20px rgba(139, 0, 0, 0.5);
+
+  /* Transition — smooth animations on hover */
+  --transition: all 0.3s ease;
+}
+
+/* ============================================================
+  2. GLOBAL RESET & BASE STYLES
+  Browsers have default styles that clash with custom designs.
+  This "reset" clears them for a consistent starting point.
+============================================================ */
+
+/* Universal box-sizing: makes padding/borders not break layouts */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* smooth = clicking nav links glides to section instead of jumping */
+}
+
+body {
+  background-color: var(--black-deep);
+  color: var(--parchment);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  /* overflow-x: hidden prevents horizontal scroll from animations */
+  overflow-x: hidden;
+}
+
+/* Remove bullet points from all lists — we style them ourselves */
+ul, ol {
+  list-style: none;
+  padding-left: 0;
+}
+
+/* Remove underlines from all links — we style them ourselves */
+a {
+  color: var(--gold);
+  text-decoration: none;
+  transition: var(--transition);
+}
+a:hover {
+  color: var(--gold-bright);
+}
+
+/* Make images responsive — never wider than their container */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ============================================================
+  3. NAVIGATION
+  Fixed to the top — stays visible as user scrolls.
+  Has a dark background with gold border on the bottom.
+============================================================ */
+#navbar {
+  position: fixed;           /* Sticks to the top of the viewport */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;             /* Sits above all other content */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: rgba(10, 10, 10, 0.95);   /* Semi-transparent dark */
+  border-bottom: 1px solid var(--gold);
+  backdrop-filter: blur(8px);           /* Frosted glass effect */
+}
+
+/* Nav Logo: Dragon SVG + site name */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+
+.dragon-icon {
+  width: 40px;
+  height: 32px;
+  filter: drop-shadow(0 0 6px rgba(201, 168, 76, 0.5));
+  animation: dragonPulse 3s ease-in-out infinite;
+  /* This animation makes the dragon logo breathe/glow */
+}
+
+/* Nav Links: horizontal list of anchor links */
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  color: var(--parchment-dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0;
+  border-bottom: 2px solid transparent;
+  transition: var(--transition);
+}
+
+.nav-links a:hover {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+/* Hamburger: only shows on mobile (hidden on desktop via @media below) */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 2px;
+  background: var(--gold);
+  transition: var(--transition);
+}
+
+/* ============================================================
+  4. HERO SECTION
+  Full-screen dramatic opening. 
+  Uses a radial gradient background + particle overlay.
+============================================================ */
+#hero {
+  position: relative;
+  min-height: 100vh;           /* Full viewport height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  /* Layered background: dark texture + red vignette */
+  background:
+    radial-gradient(ellipse at center, rgba(139, 0, 0, 0.3) 0%, transparent 70%),
+    radial-gradient(ellipse at top right, rgba(201, 168, 76, 0.1) 0%, transparent 50%),
+    var(--black-deep);
+}
+
+/* Particle container: JS fills this with animated dots */
+#particles {
+  position: absolute;
+  inset: 0;                    /* shorthand for top/right/bottom/left: 0 */
+  pointer-events: none;        /* Can't accidentally click on particles */
+  z-index: 0;
+}
+
+/* Each particle is a tiny glowing dot (created by JS) */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: floatUp var(--duration, 4s) ease-in var(--delay, 0s) infinite;
+  opacity: 0;
+}
+
+/* Watermark dragon emoji behind hero text */
+.hero-dragon-watermark {
+  position: absolute;
+  font-size: 35vw;
+  opacity: 0.03;
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+  animation: slowSpin 60s linear infinite;
+}
+
+/* Hero text content — sits on top of particles and watermark */
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  padding: var(--spacing-md);
+  animation: fadeInUp 1.2s ease both;
+}
+
+.hero-subtitle {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: var(--spacing-sm);
+  animation: fadeInUp 1s ease 0.2s both;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  /* clamp(min, preferred, max) — responsive font that scales with viewport */
+  color: var(--gold);
+  text-shadow:
+    0 0 30px rgba(201, 168, 76, 0.6),
+    0 0 60px rgba(139, 0, 0, 0.4);
+  line-height: 1.1;
+  margin-bottom: var(--spacing-sm);
+  animation: fadeInUp 1s ease 0.4s both;
+}
+
+.hero-tagline {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--parchment-dim);
+  margin-bottom: var(--spacing-md);
+  animation: fadeInUp 1s ease 0.6s both;
+}
+
+.hero-desc {
+  font-size: 1rem;
+  color: var(--parchment-dim);
+  margin-bottom: var(--spacing-md);
+  animation: fadeInUp 1s ease 0.7s both;
+}
+
+/* Hero button group */
+.hero-buttons {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 1s ease 0.9s both;
+}
+
+/* Reusable Button Styles */
+.btn {
+  display: inline-block;
+  padding: 0.9rem 2rem;
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Primary = red/gold button */
+.btn-primary {
+  background: var(--crimson);
+  color: var(--gold);
+  border: 2px solid var(--gold);
+  box-shadow: var(--shadow-red);
+}
+
+.btn-primary:hover {
+  background: var(--crimson-light);
+  box-shadow: 0 0 30px rgba(139, 0, 0, 0.8), var(--shadow-gold);
+  transform: translateY(-2px);
+  color: var(--gold-bright);
+}
+
+/* Secondary = outline button */
+.btn-secondary {
+  background: transparent;
+  color: var(--gold);
+  border: 2px solid var(--gold);
+}
+
+.btn-secondary:hover {
+  background: rgba(201, 168, 76, 0.1);
+  box-shadow: var(--shadow-gold);
+  transform: translateY(-2px);
+}
+
+/* Scroll indicator arrow at bottom of hero */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  text-align: center;
+  color: var(--parchment-dim);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.scroll-indicator i {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--gold);
+  animation: bounce 2s ease-in-out infinite;
+}
+
+/* ============================================================
+  5. SHARED SECTION STYLES
+  Every section shares these basics for consistency.
+============================================================ */
+.section {
+  padding: var(--spacing-xl) var(--spacing-md);
+  position: relative;
+}
+
+/* Alternate dark background for visual rhythm */
+.section-dark {
+  background: var(--black-mid);
+  border-top: 1px solid var(--black-light);
+  border-bottom: 1px solid var(--black-light);
+}
+
+/* Constrain content width and center it */
+.section-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Decorative section titles */
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: var(--spacing-sm);
+  text-shadow: 0 0 20px rgba(201, 168, 76, 0.4);
+  /* Decorative line above the title */
+  padding-top: 1.5rem;
+  position: relative;
+}
+
+.section-title::before {
+  /* CSS pseudo-element — decorative horizontal line above the title */
+  content: '';
+  display: block;
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin: 0 auto 1.5rem;
+}
+
+.section-intro {
+  text-align: center;
+  color: var(--parchment-dim);
+  max-width: 700px;
+  margin: 0 auto var(--spacing-lg);
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.section-intro strong {
+  color: var(--gold);
+}
+
+/* ============================================================
+  6. WHAT IS D&D SECTION
+============================================================ */
+
+/* Three-column info card grid */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  /* auto-fit + minmax: responsive columns that wrap on small screens */
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.info-card {
+  background: var(--black-mid);
+  border: var(--border-gold);
+  padding: var(--spacing-md);
+  text-align: center;
+  position: relative;
+  transition: var(--transition);
+  /* Ornate corner decoration via box-shadow */
+  box-shadow: inset 0 0 0 3px var(--black-mid), inset 0 0 0 4px rgba(201, 168, 76, 0.2);
+}
+
+.info-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-gold), inset 0 0 0 3px var(--black-mid), inset 0 0 0 4px rgba(201, 168, 76, 0.2);
+  border-color: var(--gold-bright);
+}
+
+.info-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-sm);
+  display: block;
+}
+
+.info-card h3 {
+  font-family: var(--font-heading);
+  color: var(--gold);
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.info-card p {
+  color: var(--parchment-dim);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+/* Key Terms Box */
+.terms-box {
+  background: rgba(139, 0, 0, 0.1);
+  border: 1px solid var(--crimson-light);
+  border-left: 4px solid var(--crimson);
+  padding: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.terms-box h3 {
+  font-family: var(--font-heading);
+  color: var(--gold);
+  margin-bottom: var(--spacing-sm);
+  font-size: 1.1rem;
+}
+
+.terms-list li {
+  color: var(--parchment-dim);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+  font-size: 0.9rem;
+}
+
+.terms-list li:last-child {
+  border-bottom: none;
+}
+
+.terms-list li strong {
+  color: var(--gold);
+}
+
+/* ============================================================
+  7. CHARACTERS / CLASS CARDS (CSS 3D Flip)
+  The flip effect uses:
+  - perspective: creates 3D space
+  - transform-style: preserve-3d — card has two visible faces
+  - rotateY(180deg) — flips to the back face on hover
+  - backface-visibility: hidden — hides the reverse of each face
+============================================================ */
+.class-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+}
+
+/* The outer wrapper — sets the 3D perspective depth */
+.class-card {
+  perspective: 1000px;        /* How "deep" the 3D space is */
+  height: 260px;
+  cursor: pointer;
+}
+
+/* The flipping element — contains both front and back faces */
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;   /* Children are positioned in 3D space */
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* On hover, rotate the inner card 180° to reveal the back */
+.class-card:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Both faces are positioned absolutely on top of each other */
+.card-front, .card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;    /* Hides the face when it's turned away */
+  border: var(--border-gold);
+  padding: var(--spacing-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.card-front {
+  background: var(--black-mid);
+}
+
+/* Back face starts rotated 180° so it appears when flipped */
+.card-back {
+  background: rgba(139, 0, 0, 0.15);
+  border-color: var(--crimson-light);
+  transform: rotateY(180deg);
+  justify-content: flex-start;
+  padding-top: 1.5rem;
+  overflow-y: auto;
+}
+
+.class-emoji {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 0 8px rgba(201, 168, 76, 0.5));
+}
+
+.card-front h3, .card-back h3 {
+  font-family: var(--font-heading);
+  color: var(--gold);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Role badges — colored pill labels */
+.role-badge {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.role-badge.tank    { background: rgba(74, 144, 226, 0.3); color: #4A90E2; border: 1px solid #4A90E2; }
+.role-badge.healer  { background: rgba(76, 175, 80, 0.3);  color: #4CAF50; border: 1px solid #4CAF50; }
+.role-badge.dps     { background: rgba(229, 57, 53, 0.3);  color: #EF5350; border: 1px solid #EF5350; }
+.role-badge.support { background: rgba(255, 193, 7, 0.3);  color: #FFC107; border: 1px solid #FFC107; }
+
+.hover-hint {
+  font-size: 0.7rem;
+  color: var(--parchment-dim);
+  font-style: italic;
+  margin-top: auto;
+  opacity: 0.6;
+}
+
+.card-back p {
+  font-size: 0.8rem;
+  color: var(--parchment-dim);
+  margin-bottom: 0.5rem;
+  text-align: left;
+  width: 100%;
+}
+
+.card-back ul {
+  width: 100%;
+  text-align: left;
+}
+
+.card-back ul li {
+  font-size: 0.75rem;
+  color: var(--parchment);
+  padding: 0.2rem 0;
+}
+
+.difficulty {
+  font-size: 0.75rem !important;
+  color: var(--gold) !important;
+  margin-top: 0.5rem !important;
+}
+
+/* ============================================================
+  8. HOW TO PLAY / ACCORDION
+  Clicking a header toggles the body open/closed.
+  JS adds/removes the .active class to handle open/close state.
+============================================================ */
+.accordion {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.accordion-item {
+  border: var(--border-gold);
+  border-left: 4px solid var(--gold);
+  background: var(--black-mid);
+  overflow: hidden;             /* Prevents body from spilling out when closed */
+  transition: var(--transition);
+}
+
+.accordion-item:hover {
+  border-left-color: var(--crimson-light);
+}
+
+.accordion-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem var(--spacing-md);
+  background: none;
+  border: none;
+  color: var(--gold);
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: left;
+  transition: var(--transition);
+}
+
+.accordion-header:hover {
+  background: rgba(201, 168, 76, 0.05);
+  color: var(--gold-bright);
+}
+
+/* The chevron icon rotates when accordion is open */
+.accordion-icon {
+  transition: transform 0.3s ease;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+/* JS adds .active to open items — this rotates the chevron */
+.accordion-item.active .accordion-icon {
+  transform: rotate(180deg);
+}
+
+/* Accordion body: hidden by default, revealed on .active */
+.accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  /* CSS can't animate to "auto" height — JS sets a specific pixel value */
+}
+
+.accordion-item.active .accordion-body {
+  max-height: 600px;          /* Generous max — JS overrides with exact height */
+}
+
+.accordion-body > * {
+  padding: 0 var(--spacing-md) var(--spacing-md);
+}
+
+.accordion-body p {
+  color: var(--parchment-dim);
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+}
+
+.accordion-body ul, .accordion-body ol {
+  padding-left: 1.5rem;
+  color: var(--parchment-dim);
+  font-size: 0.9rem;
+}
+
+.accordion-body ul { list-style: disc; }
+.accordion-body ol { list-style: decimal; }
+
+.accordion-body li {
+  padding: 0.3rem 0;
+}
+
+.accordion-body li strong {
+  color: var(--gold);
+}
+
+.accordion-body blockquote {
+  border-left: 3px solid var(--crimson);
+  padding: 0.75rem 1rem;
+  margin: 0.75rem 0;
+  background: rgba(139, 0, 0, 0.1);
+  font-style: italic;
+  color: var(--parchment);
+}
+
+/* Dice roll example visual */
+.roll-example {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem var(--spacing-md);
+  background: rgba(201, 168, 76, 0.05);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  margin-top: 0.75rem;
+}
+
+.roll-die { font-size: 2rem; }
+
+.roll-formula {
+  font-size: 0.9rem;
+  color: var(--parchment-dim);
+}
+
+.roll-formula strong { color: var(--gold-bright); }
+
+/* ============================================================
+  9. BATTLE DEMO
+============================================================ */
+.battle-arena {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--spacing-md);
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--black-light);
+  position: relative;
+}
+
+/* Dramatic background grid pattern */
+.battle-arena::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(201, 168, 76, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201, 168, 76, 0.03) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
+}
+
+/* Each combatant panel */
+.combatant {
+  text-align: center;
+  padding: var(--spacing-sm);
+  background: var(--black-mid);
+  border: var(--border-gold);
+  position: relative;
+  z-index: 1;
+}
+
+.combatant-name {
+  font-family: var(--font-heading);
+  color: var(--gold);
+  font-size: 1rem;
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: 0.05em;
+}
+
+/* The character emoji sprite */
+.combatant-art {
+  font-size: 4rem;
+  margin: var(--spacing-sm) 0;
+  filter: drop-shadow(0 0 10px rgba(201, 168, 76, 0.4));
+  transition: transform 0.1s ease;
+}
+
+/* JS adds these classes to trigger hit/dodge animations */
+.combatant-art.hit {
+  animation: hitFlash 0.5s ease;
+}
+
+.combatant-art.dodge {
+  animation: dodgeShake 0.4s ease;
+}
+
+/* HP Bar system */
+.hp-bar-wrapper {
+  margin: 0.5rem 0;
+}
+
+.hp-label {
+  font-size: 0.85rem;
+  color: var(--parchment-dim);
+  margin-bottom: 0.3rem;
+}
+
+.hp-label span {
+  color: var(--gold);
+  font-weight: bold;
+}
+
+.hp-bar {
+  height: 12px;
+  background: var(--black-light);
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* The colored fill inside the HP bar — width changes via JS */
+.hp-fill {
+  height: 100%;
+  border-radius: 6px;
+  width: 100%;                /* Starts full */
+  transition: width 0.5s ease, background-color 0.3s ease;
+}
+
+.player-hp-fill { background: linear-gradient(to right, #2E7D32, var(--green-hp)); }
+.enemy-hp-fill  { background: linear-gradient(to right, #B71C1C, var(--red-hp)); }
+
+/* When HP gets low, bar turns yellow then red */
+.hp-fill.warning { background: linear-gradient(to right, #F57F17, #FFC107) !important; }
+.hp-fill.critical { background: linear-gradient(to right, #B71C1C, #EF5350) !important; }
+
+.stats-mini {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.stats-mini span {
+  font-size: 0.7rem;
+  color: var(--parchment-dim);
+  background: var(--black-light);
+  padding: 0.2rem 0.5rem;
+  border: 1px solid rgba(201, 168, 76, 0.2);
+}
+
+/* Center column: VS banner + dice */
+.battle-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.vs-banner {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--crimson-light);
+  text-shadow: var(--shadow-red);
+  letter-spacing: 0.2em;
+}
+
+/* Dice display box */
+.dice-display {
+  background: var(--black-deep);
+  border: 2px solid var(--gold);
+  width: 90px;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-gold);
+}
+
+/* When JS adds .rolling class, the dice spins */
+.dice-display.rolling .dice-face {
+  animation: diceRoll 0.6s ease;
+}
+
+.dice-face {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.dice-result {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--gold);
+  font-weight: bold;
+}
+
+.round-display {
+  font-size: 0.8rem;
+  color: var(--parchment-dim);
+  letter-spacing: 0.1em;
+}
+
+/* Action Buttons row */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Individual action buttons */
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  min-width: 130px;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--parchment);
+  border: 2px solid;
+  cursor: pointer;
+  transition: var(--transition);
+  background: var(--black-mid);
+  letter-spacing: 0.05em;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-btn small {
+  font-size: 0.65rem;
+  color: var(--parchment-dim);
+  margin-top: 0.25rem;
+  font-family: var(--font-body);
+}
+
+.action-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.attack-btn { border-color: var(--crimson-light); }
+.attack-btn:hover:not(:disabled) {
+  background: rgba(139, 0, 0, 0.3);
+  box-shadow: var(--shadow-red);
+  transform: translateY(-2px);
+}
+
+.spell-btn { border-color: var(--blue-spell); }
+.spell-btn:hover:not(:disabled) {
+  background: rgba(92, 123, 212, 0.2);
+  box-shadow: 0 0 15px rgba(92, 123, 212, 0.4);
+  transform: translateY(-2px);
+}
+
+.dodge-btn { border-color: var(--gold); }
+.dodge-btn:hover:not(:disabled) {
+  background: rgba(201, 168, 76, 0.1);
+  box-shadow: var(--shadow-gold);
+  transform: translateY(-2px);
+}
+
+/* Combat Log */
+.combat-log-wrapper {
+  background: var(--black-deep);
+  border: var(--border-gold);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.combat-log-title {
+  padding: 0.5rem 1rem;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.3);
+  text-transform: uppercase;
+  background: rgba(201, 168, 76, 0.05);
+}
+
+.combat-log {
+  padding: var(--spacing-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* Each log entry fades in when added */
+.log-entry {
+  font-size: 0.85rem;
+  color: var(--parchment-dim);
+  animation: fadeInUp 0.3s ease both;
+  padding: 0.2rem 0;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.05);
+}
+
+.log-system  { color: var(--parchment-dim); }
+.log-player  { color: #4CAF50; }
+.log-enemy   { color: #EF5350; }
+.log-miss    { color: #888; font-style: italic; }
+.log-crit    { color: var(--gold-bright); font-weight: bold; }
+.log-victory { color: var(--gold); font-size: 1rem; font-weight: bold; }
+.log-defeat  { color: var(--red-hp); font-size: 1rem; font-weight: bold; }
+.log-dodge   { color: var(--blue-spell); }
+
+/* Restart button */
+.restart-btn {
+  display: block;
+  margin: var(--spacing-md) auto 0;
+}
+
+/* ============================================================
+  10. SOUNDBOARD
+============================================================ */
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.volume-control label {
+  font-family: var(--font-heading);
+  color: var(--gold);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+input[type="range"] {
+  width: 200px;
+  accent-color: var(--gold);  /* Colors the range slider track */
+  cursor: pointer;
+}
+
+#volume-display {
+  font-family: var(--font-heading);
+  color: var(--parchment-dim);
+  font-size: 0.85rem;
+  min-width: 40px;
+}
+
+.soundboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Sound buttons styled as worn leather tavern buttons */
+.sound-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1.2rem 0.75rem;
+  background: var(--black-mid);
+  border: 2px solid var(--black-light);
+  color: var(--parchment-dim);
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--font-heading);
+  position: relative;
+  /* Leather texture via gradient */
+  background-image: linear-gradient(135deg, rgba(255,255,255,0.03) 25%, transparent 25%),
+                    linear-gradient(-135deg, rgba(255,255,255,0.03) 25%, transparent 25%);
+}
+
+.sound-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-gold);
+}
+
+/* When active (sound is ON), button glows and shows active state */
+.sound-btn.active {
+  border-color: var(--crimson-light);
+  background: rgba(139, 0, 0, 0.2);
+  color: var(--parchment);
+  box-shadow: var(--shadow-red);
+}
+
+.sound-btn.active .sound-status {
+  color: var(--green-hp);
+}
+
+.sound-icon { font-size: 1.8rem; }
+
+.sound-name {
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.sound-status {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--crimson-light);
+  text-transform: uppercase;
+}
+
+.audio-note {
+  background: rgba(201, 168, 76, 0.05);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  border-left: 4px solid var(--gold);
+  padding: var(--spacing-sm);
+  text-align: center;
+}
+
+.audio-note p {
+  font-size: 0.85rem;
+  color: var(--parchment-dim);
+}
+
+.audio-note code {
+  background: var(--black-light);
+  padding: 0.1rem 0.4rem;
+  color: var(--gold);
+  font-size: 0.8rem;
+}
+
+/* ============================================================
+  11. FOOTER
+============================================================ */
+#footer {
+  background: var(--black-deep);
+  border-top: 2px solid var(--gold);
+  text-align: center;
+  padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.footer-dragon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 0 10px rgba(201, 168, 76, 0.4));
+}
+
+.footer-title {
+  font-family: var(--font-display);
+  color: var(--gold);
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.footer-tagline {
+  color: var(--parchment-dim);
+  font-style: italic;
+  margin-bottom: var(--spacing-md);
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-md);
+}
+
+.footer-links a {
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+.footer-copy {
+  font-size: 0.75rem;
+  color: rgba(245, 230, 200, 0.3);
+}
+
+/* ============================================================
+  12. KEYFRAME ANIMATIONS
+  @keyframes define the animation steps.
+  They're applied to elements via the "animation" property.
+============================================================ */
+
+/* Dragon logo breathing glow */
+@keyframes dragonPulse {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(201, 168, 76, 0.3)); }
+  50%       { filter: drop-shadow(0 0 12px rgba(201, 168, 76, 0.8)); }
+}
+
+/* Particles float upward and fade out */
+@keyframes floatUp {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  10%  { opacity: 0.8; }
+  90%  { opacity: 0.4; }
+  100% { transform: translateY(-100vh) translateX(var(--drift, 20px)); opacity: 0; }
+}
+
+/* Watermark dragon rotates very slowly */
+@keyframes slowSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Scroll indicator bounce */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(8px); }
+}
+
+/* Elements fade in from below */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Hit flash: element turns red then back to normal */
+@keyframes hitFlash {
+  0%   { filter: brightness(1); transform: scale(1); }
+  25%  { filter: brightness(3) sepia(1) saturate(5) hue-rotate(-30deg); transform: scale(1.15); }
+  50%  { filter: brightness(0.5); transform: scale(0.95); }
+  100% { filter: brightness(1); transform: scale(1); }
+}
+
+/* Dodge shake: quick side-to-side */
+@keyframes dodgeShake {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(-15px); }
+  75%       { transform: translateX(15px); }
+}
+
+/* Dice spin animation when rolling */
+@keyframes diceRoll {
+  0%   { transform: rotate(0deg) scale(1); }
+  25%  { transform: rotate(90deg) scale(1.2); }
+  50%  { transform: rotate(180deg) scale(1); }
+  75%  { transform: rotate(270deg) scale(1.2); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* Screen flash on critical hit */
+@keyframes critFlash {
+  0%, 100% { box-shadow: none; }
+  50%       { box-shadow: 0 0 60px rgba(255, 215, 0, 0.8) inset; }
+}
+
+/* ============================================================
+  13. MEDIA QUERIES — RESPONSIVE DESIGN
+  @media rules apply styles ONLY at specific screen widths.
+  Mobile-first approach: override for small screens below.
+============================================================ */
+
+/* Tablets and below (max-width: 768px) */
+@media (max-width: 768px) {
+
+  /* Show hamburger, hide desktop nav links */
+  .hamburger {
+    display: flex;
+  }
+
+  /* Nav links collapse into a dropdown menu */
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: rgba(10, 10, 10, 0.98);
+    border-top: 1px solid var(--gold);
+    padding: 1rem 2rem;
+    gap: 1rem;
+  }
+
+  /* JS adds .open to show the mobile menu */
+  .nav-links.open {
+    display: flex;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .battle-arena {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+
+  .battle-center {
+    order: -1;               /* Moves dice to the top on mobile */
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .action-btn {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .class-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+
+/* Small phones (max-width: 480px) */
+@media (max-width: 480px) {
+  .section { padding: var(--spacing-lg) var(--spacing-sm); }
+  .soundboard-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-links { flex-direction: column; align-items: center; }
+}
