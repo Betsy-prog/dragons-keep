@@ -118,7 +118,7 @@ a:hover {
   color: var(--gold-bright);
 }
 
-/* Make images responsive — never wider than their container */
+/* Make images responsive */
 img {
   max-width: 100%;
   display: block;
