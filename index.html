@@ -1,21 +1,14 @@
 <!DOCTYPE html>
-<!-- 
-  DOCTYPE tells the browser: "This is a modern HTML5 page."
-  Always the very first line of any HTML file.
--->
 <html lang="en">
 <head>
-  <!-- HEAD = stuff the browser needs but users don't see directly -->
   <meta charset="UTF-8" />
   <!-- UTF-8 means the page supports all characters, including symbols like ⚔️ -->
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- This makes the site look good on phones — without it, mobile looks zoomed out -->
+  <!-- This makes the site look good on phones -->
 
   <title>The Dragon's Keep — D&D for Beginners</title>
 
-  <!-- Google Fonts: loading two medieval-style fonts -->
-  <!-- MedievalSharp = decorative titles | Cinzel = elegant body text -->
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700;900&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet" />
 
   <!-- Font Awesome = icon library for sword/shield/dice symbols -->
@@ -34,7 +27,7 @@
   ============================================================ -->
   <nav id="navbar">
     <div class="nav-logo">
-      <!-- Inline SVG Dragon Logo — no image file needed! -->
+      <!-- Inline SVG Dragon Logo -->
       <svg class="dragon-icon" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
         <path d="M50 5 C30 5 10 20 10 40 C10 55 20 65 35 68 L50 75 L65 68 C80 65 90 55 90 40 C90 20 70 5 50 5Z" fill="#8B0000" opacity="0.9"/>
         <path d="M35 30 C30 20 15 15 10 25 C8 30 15 38 25 35Z" fill="#C9A84C"/>
@@ -666,7 +659,7 @@
     <p class="footer-copy">Built with ❤️ for new adventurers. D&D is © Wizards of the Coast.</p>
   </footer>
 
-  <!-- Script tag ALWAYS goes at the bottom of <body> -->
+  <!-- Script tag goes at the bottom of <body> -->
   <!-- This ensures all HTML elements exist before JS tries to find them -->
   <script src="script.js"></script>
 
